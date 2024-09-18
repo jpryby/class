@@ -1623,6 +1623,11 @@ binmode(STDOUT, ":utf8");
 my $file = $_[0];
 my ($fname) = $file =~ /\/*([^\/]+?)$/;
 $fname =~ s/(.+)\..+?$/$1/g;
+if ($fname =~/.*\.tmppdf$/) {
+	my $fbase = "$fname";
+	$fname = "$fname.pdf";
+	return "\\renewcommand{\\fname}{$fname}\\renewcommand{\\fbase}{$fbase}";
+}
 my $fbase = "$fname.tmppdf";
 $fname = "$fname.tmppdf.pdf";
 if (!-e $fname) { copy $file, $fname; }
